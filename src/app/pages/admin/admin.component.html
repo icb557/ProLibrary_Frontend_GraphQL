@@ -29,6 +29,7 @@
             <h2>Gestión de Autores</h2>
             <p>Añadir, editar y eliminar autores en el sistema.</p>
             <button class="btn-search"><i class="fas fa-search"></i> Buscar Autor</button>
+            <button class="btn-add" (click)="formAddAuthor()"><i class="fas fa-plus"></i> Agregar Autor</button>
             <button class="btn-edit"><i class="fas fa-edit"></i> Editar Autor</button>
             <button class="btn-delete"><i class="fas fa-trash"></i> Eliminar Autor</button>
         </section>
@@ -38,7 +39,7 @@
             <h2>Gestión de Libros</h2>
             <p>Añadir, editar y eliminar libros en el sistema.</p>
             <button class="btn-search"><i class="fas fa-search"></i> Buscar Libro</button>
-            <button class="btn-add"><i class="fas fa-plus"></i> Agregar Libro</button>
+            <button class="btn-add"><i class="fas fa-plus" (click)="formAddBook()"></i> Agregar Libro</button>
             <button class="btn-edit"><i class="fas fa-edit"></i> Editar Libro</button>
             <button class="btn-delete"><i class="fas fa-trash"></i> Eliminar Libro</button>
         </section>

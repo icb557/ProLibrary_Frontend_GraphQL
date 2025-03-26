@@ -14,4 +14,10 @@ export class AdminComponent {
   formAdd() {
     this.router.navigate(['/formPerson']);
   }
+  formAddAuthor() {
+    this.router.navigate(['/formAuthor']);
+  }
+  formAddBook() {
+    this.router.navigate(['/formBook']);
+  }
 }

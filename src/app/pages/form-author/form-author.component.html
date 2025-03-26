@@ -1,0 +1,27 @@
+<form class="author-form" [formGroup]="authorForm">
+    <h2>Gestión de Autores</h2>
+
+    <label for="firstname">Primer Nombre</label>
+    <input type="text" id="firstname" formControlName="firstname" placeholder="Ingrese el primer nombre">
+
+    <label for="middlename">Segundo Nombre</label>
+    <input type="text" id="middlename" formControlName="middlename" placeholder="Ingrese el segundo nombre">
+
+    <label for="lastname">Primer Apellido</label>
+    <input type="text" id="lastname" formControlName="lastname" placeholder="Ingrese el primer apellido">
+
+    <label for="secondlastname">Segundo Apellido</label>
+    <input type="text" id="secondlastname" formControlName="secondlastname" placeholder="Ingrese el segundo apellido">
+
+    <label for="nationality">Nacionalidad</label>
+    <input type="text" id="nationality" formControlName="nationality" placeholder="Ingrese la nacionalidad">
+
+    <div class="form-buttons">
+        <button type="submit" class="btn-save" (click)="saveAuthor()">
+            <i class="fas fa-save"></i> Guardar
+        </button>
+        <button type="button" class="btn-cancel">
+            <i class="fas fa-times"></i> Cancelar
+        </button>
+    </div>
+</form>
