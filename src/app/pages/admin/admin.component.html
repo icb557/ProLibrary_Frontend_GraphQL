@@ -1,18 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Biblioteca</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Panel de Administrador</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
+
 <body>
-    <div class="login-container">
-        <h2>Iniciar Sesión</h2>
-        <form action="dashboard.html" method="POST">
-            <input type="text" name="username" placeholder="Usuario" required>
-            <input type="password" name="password" placeholder="Contraseña" required>
-            <button type="submit">Ingresar</button>
-        </form>
+    <!-- Navbar -->
+    <nav>
+        <h1>Panel de Administrador</h1>
+        <ul>
+            <li><a href="#autores">Autores</a></li>
+            <li><a href="#libros">Libros</a></li>
+            <li><a href="#usuarios">Usuarios</a></li>
+        </ul>
+    </nav>
+
+
+    <div class="container">
+
+        <section id="autores">
+            <h2>Gestión de Autores</h2>
+            <p>Añadir, editar y eliminar autores en el sistema.</p>
+            <button class="btn-search"><i class="fas fa-search"></i> Buscar Autor</button>
+            <button class="btn-edit"><i class="fas fa-edit"></i> Editar Autor</button>
+            <button class="btn-delete"><i class="fas fa-trash"></i> Eliminar Autor</button>
+        </section>
+
+
+        <section id="libros">
+            <h2>Gestión de Libros</h2>
+            <p>Añadir, editar y eliminar libros en el sistema.</p>
+            <button class="btn-search"><i class="fas fa-search"></i> Buscar Libro</button>
+            <button class="btn-add"><i class="fas fa-plus"></i> Agregar Libro</button>
+            <button class="btn-edit"><i class="fas fa-edit"></i> Editar Libro</button>
+            <button class="btn-delete"><i class="fas fa-trash"></i> Eliminar Libro</button>
+        </section>
+
+
+        <section id="usuarios">
+            <h2>Gestión de Usuarios</h2>
+            <p>Añadir, editar y eliminar usuarios en el sistema.</p>
+            <button class="btn-search"><i class="fas fa-search"></i> Buscar Usuario</button>
+            <button class="btn-add" (click)="formAdd()"><i class="fas fa-user-plus"></i> Agregar Usuario</button>
+            <button class="btn-edit"><i class="fas fa-user-edit"></i> Editar Usuario</button>
+            <button class="btn-delete"><i class="fas fa-user-times"></i> Eliminar Usuario</button>
+        </section>
     </div>
+
+
+    <footer>
+        <p>&copy; 2025 Biblioteca Municipal. Todos los derechos reservados.</p>
+    </footer>
 </body>
 
+</html>
