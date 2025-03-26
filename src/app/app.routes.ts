@@ -6,18 +6,18 @@ import { FormBookComponent } from './pages/form-book/form-book.component';
 
 export const routes: Routes = [{
     title: 'Admin',
-    path: '',
+    path: 'admin',
     component: AdminComponent
 }, {
-    title: 'Form Person',
-    path: 'formPerson',
+    title: 'FormPerson',
+    path: 'admin/formPerson',
     component: FormPersonComponent
 }, {
-    title: 'Form Author',
-    path: 'formAuthor',
+    title: 'FormAuthor',
+    path: 'admin/formAuthor',
     component: FormAuthorComponent
 }, {
-    title: 'Form Book',
-    path: 'formBook',
+    title: 'FormBook',
+    path: 'admin/formBook',
     component: FormBookComponent
 }];
