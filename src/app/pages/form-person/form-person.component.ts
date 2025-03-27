@@ -5,6 +5,7 @@ import { Person } from '../../interfaces/person';
 import { PersonService } from '../../services/person.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, isEmpty, of, switchMap, tap } from 'rxjs';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-form-person',
   imports: [FormsModule, ReactiveFormsModule],
@@ -33,6 +34,17 @@ export class FormPersonComponent {
       }
       console.log(person)
       this._personService.createPerson(person).subscribe(data => {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Person Created",
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          this.router.navigate(['/admin/users'])
+
+        })
+
 
       })
     }
