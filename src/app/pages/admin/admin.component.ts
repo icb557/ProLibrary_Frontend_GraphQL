@@ -15,7 +15,7 @@ export class AdminComponent {
   }
 
   formAdd() {
-    this.router.navigate(['/formPerson']);
+    this.router.navigate(['/admin/formPerson']);
   }
   formAddAuthor() {
     this.router.navigate(['/formAuthor']);
