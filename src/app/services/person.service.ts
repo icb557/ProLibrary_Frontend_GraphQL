@@ -19,20 +19,20 @@ export class PersonService {
     return this.http.get<Person[]>(`${this.myAppUrl}/people`);
   }
 
-  getPersonById(id: number): Observable<Person> {
-    return this.http.get<Person>(`${this.myAppUrl}/${id}`);
+  getPersonByUsername(username: string): Observable<Person> {
+    return this.http.get<Person>(`${this.myAppUrl}/person/${username}`);
   }
 
-  searchPersonByUsername(username: string): Observable<Person> {
-    return this.http.get<Person>(`${this.myAppUrl}/search?username=${username}`);
+  searchPersonByUsername(username: string): Observable<Person[]> {
+    return this.http.get<Person[]>(`${this.myAppUrl}/person/search?username=${username}`);
   }
 
-  updatePerson(id: number, person: Person): Observable<Person> {
-    return this.http.put<Person>(`${this.myAppUrl}/${id}`, person);
+  updatePerson(username: string, person: Person): Observable<Person> {
+    return this.http.put<Person>(`${this.myAppUrl}/person/${username}`, person);
   }
 
-  deletePerson(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}/${id}`);
+  deletePerson(username: string): Observable<void> {
+    return this.http.delete<void>(`${this.myAppUrl}/person/${username}`);
   }
 
 
