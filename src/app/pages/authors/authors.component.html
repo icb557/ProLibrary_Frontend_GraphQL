@@ -1,35 +1,36 @@
-<!-- <app-navbar></app-navbar>
+<app-navbar></app-navbar>
 
 @if (showForm) {
-<app-category-form></app-category-form>
+<app-form-author></app-form-author>
 }
 
 <div class="main">
-  <h2>Collection</h2>
+  <h2>Authors</h2>
 
   <section class="main-container">
-    @if (rol === 'administrator') {
-    <button (click)="addCategory()">
-      New Category
-      <fa-icon [icon]="addIcon"></fa-icon>
+    
+    <button (click)="addAuthor()">
+      New Author
+      <i class="fs fa-plus"></i>
     </button>
-    } @for (item of listCategory; track item.id; ; let i = $index) {
-    <article class="category" style="background-image: url({{listImages[i]}});">
-      <a class="see-apps" id="{{item.id}}" (click)="seeApps(item.id!)">See apps <fa-icon
-          [icon]="seeAppsIcon"></fa-icon></a>
+
+    @for (item of list; track item.id; ; let i = $index) {
+    <article class="article">
+      <!-- <a class="see-apps" id="{{item.id}}" (click)="seeApps(item.id!)">See apps <fa-icon
+          [icon]="seeAppsIcon"></fa-icon></a> -->
       <div class="body-category">
-        <h3>{{ item.name }}</h3>
-        <p>{{ item.description }}</p>
+        <h3>{{ item.firstName + item.firstlastName }}</h3>
+        <p>{{ 'Nationatility:' + item.nationality }}</p>
+        <p>{{ 'ID:' + item.id }}</p>
       </div>
-      @if (rol === 'administrator') {
       <div class="icons">
-        @if(item.id! > 3){
-        <a class="delIcon" (click)="deleteCategory(item.id!, item.name!)"><fa-icon [icon]="deleteIcon"></fa-icon></a>
-        }
-        <a class="edIcon" (click)="editCategory(item.id!)"><fa-icon [icon]="editIcon"></fa-icon></a>
+        
+        <a class="delIcon" (click)="deleteAuthor(item.id!, item.firstName! + item.firstlastName!)"><i class="fs fa-trash"></i></a>
+          
+        <a class="edIcon" (click)="editAuthor(item.id!)"><i class="fs fa-pen"></i></a>
       </div>
-      }
+      
     </article>
     }
   </section>
-</div> -->
+</div>
