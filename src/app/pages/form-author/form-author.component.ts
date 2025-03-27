@@ -15,6 +15,7 @@ import { Author } from '../../interfaces/author';
 })
 export class FormAuthorComponent {
   authorForm = new FormGroup({
+    id: new FormControl('', [Validators.required]),
     firstName: new FormControl('', [Validators.required, Validators.minLength(4)]),
     middleName: new FormControl('', [Validators.required, Validators.minLength(4)]),
     lastName: new FormControl('', [Validators.required, Validators.minLength(4)]),
