@@ -1,1 +1,20 @@
-<p>navbar works!</p>
+<nav>
+    <h1>Library</h1>
+    <section>
+        <ul>       
+            @if (role === 'ROLE_ADMIN') {
+                <h1>Admin Panel</h1>
+                <li><a (click)="goHome()">Home</a></li>
+                <li><a [routerLink]="['/authors']">Authors</a></li>
+                <li><a [routerLink]="['/books']">Books</a></li>
+                <li><a [routerLink]="['/users']">Users</a></li>
+            } @else {
+                <h1>Employee Panel</h1>
+            }
+        </ul>
+    </section>
+    <section id="right">
+        <h2>{{username}}</h2>
+        <button (click)="logout()">Log Out</button>
+    </section>
+</nav>

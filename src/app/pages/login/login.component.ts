@@ -39,8 +39,8 @@ export class LoginComponent {
             const username = this._jwtService.getUsername(token!)
             const role = this._jwtService.getRole(token!)
             localStorage.setItem('token', token!)
-            localStorage.setItem('token', username!)
-            localStorage.setItem('token', role!)
+            localStorage.setItem('username', username!)
+            localStorage.setItem('role', role!)
             if (this.validateRole(role!)) {
               this.router.navigate(['/admin'])
             } else {
