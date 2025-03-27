@@ -1,22 +1,28 @@
 <body>
     <app-navbar></app-navbar>
     <div class="employee-container">
-        <h2>Reporte de Autores por Cédula</h2>
+        <h1>Books</h1>
 
-        <input type="text" placeholder="Ingrese la cédula del autor...">
-        <button>Buscar</button>
+        <input [(ngModel)]="searchTitle" type="text" placeholder="Input Title">
+        <button (click)="searchBook()">Search</button>
 
-        <div class="author-info">
-            <h3>Información del Autor</h3>
-            <p><strong>Nombre Completo:</strong> Gabriel José de la Concordia García Márquez</p>
-
-            <h3>Libros Asociados</h3>
-            <ul>
-                <li>Cien años de soledad</li>
-                <li>El amor en los tiempos del cólera</li>
-                <li>Crónica de una muerte anunciada</li>
-            </ul>
-        </div>
+        <section class="cards">
+            @for (item of books; track $index) {
+                <div class="author-info">
+                    <h2>{{item.title}}</h2>
+                    <p><strong>ISBN:</strong> {{item.isbn}}</p>
+                    <p><strong>Editorial:</strong> {{item.editorial}}</p>
+                    <p><strong>Publication Year:</strong> {{item.publicationYear}}</p>
+        
+                    <h3>Authors:</h3>
+                    <ul>
+                        @for (author of item.authors; track $index) {
+                            <li>{{author.firstName + ' ' + author.firstLastName}}</li>
+                        }
+                    </ul>
+                </div>
+            }
+        </section>
     </div>
     <app-footer></app-footer>
 </body>

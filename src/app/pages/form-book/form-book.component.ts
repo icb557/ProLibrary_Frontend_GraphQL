@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Author } from '../../interfaces/author';
 import { AuthorService } from '../../services/author.service';
+import { forkJoin, Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-form-book',
@@ -60,85 +61,64 @@ export class FormBookComponent {
     })
   }
 
+  parseAuthors(authors: string): Observable<Author[]> {
+    const arr = authors.split(',').map(x => x.trim());
+    
+    // Use forkJoin to wait for all author requests to complete
+    return forkJoin(
+      arr.map(authorId => this.authorService.getAuthorById(authorId))
+    );
+  }
+  
   saveBook() {
     if (this.BookForm.valid) {
-      const Book: Book = {
-        isbn: this.BookForm.value.isbn!,
-        title: this.BookForm.value.title!,
-        editorial: this.BookForm.value.editorial!,
-        genre: this.BookForm.value.genre!,
-        publicationYear: Number(this.BookForm.value.publicationYear!),
-        authors: this.parseAuthors(this.BookForm.value.authors!)
-      }
-
-      if (this.action == 'add'){
-        this._BookService.createBook(Book).subscribe({
-          next: () => {
-            Swal.fire({
-              icon: "success",
-              title: "Book created successfully",
-              text: `Book ${Book.title} was created!!`,
-              showConfirmButton: false,
-              timer: 1500
-            })
-            this.goBack();
-          }, error: (e: HttpErrorResponse) => {
-            
-              Swal.fire({
-                icon: "error",
-                title: "Error creating Book",
-                text: `Check the form fields and try later`,
-                showConfirmButton: false,
-                timer: 2000
-              })
-            
-          } 
-        })  
-      } else {
-        this._BookService.updateBook(this.id, Book).subscribe({
-          next: () => {
-            Swal.fire({
-              icon: "success",
-              title: "Book updated successfully",
-              text: `Book ${Book.title} was updated!!`,
-              showConfirmButton: false,
-              timer: 1500
-            })
-            this.goBack();
-          }, error: (e: HttpErrorResponse) => {
-            
-              Swal.fire({
-                icon: "error",
-                title: "Error updating Book",
-                text: `Check the form fields and try later`,
-                showConfirmButton: false,
-                timer: 2000
-              })
-          } 
+      // Use the parseAuthors method which now returns an Observable
+      this.parseAuthors(this.BookForm.value.authors!).pipe(
+        // Use switchMap to create the book after authors are fetched
+        switchMap(authors => {
+          const Book: Book = {
+            isbn: this.BookForm.value.isbn!,
+            title: this.BookForm.value.title!,
+            editorial: this.BookForm.value.editorial!,
+            genre: this.BookForm.value.genre!,
+            publicationYear: Number(this.BookForm.value.publicationYear!),
+            authors: authors // Now this is the actual array of authors
+          };
+  
+          return this.action === 'add' 
+            ? this._BookService.createBook(Book)
+            : this._BookService.updateBook(this.id, Book);
         })
-      }
-
+      ).subscribe({
+        next: () => {
+          Swal.fire({
+            icon: "success",
+            title: this.action === 'add' ? "Book created successfully" : "Book updated successfully",
+            text: `Book ${this.BookForm.value.title} was ${this.action === 'add' ? 'created' : 'updated'}!!`,
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.goBack();
+        },
+        error: (e: HttpErrorResponse) => {
+          Swal.fire({
+            icon: "error",
+            title: `Error ${this.action === 'add' ? 'creating' : 'updating'} Book`,
+            text: `Check the form fields and try later`,
+            showConfirmButton: false,
+            timer: 2000
+          });
+        }
+      });
     } else {
-      console.log(this.BookForm)
       Swal.fire({
         icon: "error",
         title: "Form is not valid",
         text: `Check the form fields and try later`,
         showConfirmButton: false,
         timer: 2000
-      })
+      });
     }
-  }
-
-  parseAuthors(authors: string): Author[]{
-    const arr = authors.split(',')
-    const authorsArr: Author[] = []
-    arr.map(x => {
-      this.authorService.getAuthorById(x.trim()).subscribe((data) => {
-        authorsArr.push(data)
-      })
-    })
-    return authorsArr
   }
 
   goBack(){

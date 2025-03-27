@@ -25,7 +25,7 @@
                         <td>{{ user.username }}</td>
                         <td>{{ user.role }}</td>
                         <td>
-                            <button>Edit</button>
+                            <button (click)="formEdit(user.username)">Edit</button>
                             <button (click)="deleteUser(user.username)">Delete</button>
                         </td>
                     </tr>

@@ -26,8 +26,13 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.loadUsers();
   }
+
   formAdd() {
     this.router.navigate(['admin/users/formPerson/create']);
+  }
+
+  formEdit(username: string) {
+    this.router.navigate([`admin/users/formPerson/edit/${username}`]);
   }
 
 
