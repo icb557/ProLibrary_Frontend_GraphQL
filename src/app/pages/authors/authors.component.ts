@@ -44,9 +44,9 @@ export class AuthorsComponent {
 
   deleteAuthor(id: string, name: string) {
     Swal.fire({
-      title: "Are you sure to remove the Author?",
+      title: "Are you sure you want to remove the Author?",
       showCancelButton: true,
-      confirmButtonText: "Yes, Delete it",
+      confirmButtonText: "Yes, delete it",
     }).then((result) => {
       if (result.isConfirmed) {
         this._AuthorService.deleteAuthor(id).subscribe({
@@ -65,6 +65,7 @@ export class AuthorsComponent {
             Swal.fire({
               icon: "error",
               title: "Error Deleting Author",
+              text: `${e.error.message}`,
               showConfirmButton: false,
               timer: 1500
             });

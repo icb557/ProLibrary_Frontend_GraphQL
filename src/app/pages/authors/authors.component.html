@@ -23,7 +23,7 @@
         <p>{{ 'ID: ' + item.id }}</p>
       </div>
       <div class="icons">
-        <button class="btn del"><i class="fas fa-trash"></i> Delete</button>
+        <button class="btn del" (click)="deleteAuthor(item.id, item.firstName + item.firstLastName)"><i class="fas fa-trash"></i> Delete</button>
         <button class="btn upt" (click)="editAuthor(item.id)"><i class="fas fa-pen"></i> Update</button>
       </div>
     </article>

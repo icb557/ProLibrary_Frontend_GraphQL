@@ -12,7 +12,7 @@ export class AuthorService {
 
   }
   createAuthor(author: Author): Observable<Author> {
-    return this.http.post<Author>(`${this.myAppUrl}`, author);
+    return this.http.post<Author>(`${this.myAppUrl}/author`, author);
   }
 
   getAuthors(): Observable<Author[]> {
@@ -20,15 +20,15 @@ export class AuthorService {
   }
 
   getAuthorById(id: string): Observable<Author> {
-    return this.http.get<Author>(`${this.myAppUrl}/${id}`);
+    return this.http.get<Author>(`${this.myAppUrl}/author/${id}`);
   }
 
   updateAuthor(id: string, author: Author): Observable<Author> {
-    return this.http.put<Author>(`${this.myAppUrl}/${id}`, author);
+    return this.http.put<Author>(`${this.myAppUrl}/author/${id}`, author);
   }
 
   deleteAuthor(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}/${id}`);
+    return this.http.delete<void>(`${this.myAppUrl}/author/${id}`);
   }
 
 }
