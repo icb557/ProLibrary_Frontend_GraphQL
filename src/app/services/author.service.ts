@@ -7,29 +7,28 @@ import { Author } from '../interfaces/author';
 })
 export class AuthorService {
   private myAppUrl: string
-  private myApiUrl: string
   constructor(private http: HttpClient) {
-    this.myAppUrl = 'http://localhost:8080/'
-    this.myApiUrl = 'api/author'
+    this.myAppUrl = 'http://localhost:8080'
+
   }
   createAuthor(author: Author): Observable<Author> {
-    return this.http.post<Author>(`${this.myAppUrl}${this.myApiUrl}`, author);
+    return this.http.post<Author>(`${this.myAppUrl}`, author);
   }
 
   getAuthors(): Observable<Author[]> {
-    return this.http.get<Author[]>(`${this.myAppUrl}api/authors`);
+    return this.http.get<Author[]>(`${this.myAppUrl}/authors`);
   }
 
   getAuthorById(id: string): Observable<Author> {
-    return this.http.get<Author>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
+    return this.http.get<Author>(`${this.myAppUrl}/${id}`);
   }
 
   updateAuthor(id: string, author: Author): Observable<Author> {
-    return this.http.put<Author>(`${this.myAppUrl}${this.myApiUrl}/${id}`, author);
+    return this.http.put<Author>(`${this.myAppUrl}/${id}`, author);
   }
 
   deleteAuthor(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
+    return this.http.delete<void>(`${this.myAppUrl}/${id}`);
   }
 
 }

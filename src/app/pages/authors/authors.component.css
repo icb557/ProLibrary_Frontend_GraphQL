@@ -1,4 +1,4 @@
-/* .main {
+.main {
     overflow-y: hidden;
     position: relative;
     top: 110px;
@@ -18,7 +18,7 @@
     width: 100%;
 }
 
-.category {
+.article {
     position: relative;
     width: 400px;
     height: 250px;
@@ -30,7 +30,7 @@
     transition: all .5s ease;
 }
 
-.category:hover {
+.article:hover {
     cursor: pointer;
     -webkit-box-shadow: 0px 14px 32px 0px rgba(5, 127, 215, 0.5);
     -moz-box-shadow: 0px 14px 32px 0px rgba(5, 127, 215, 0.5);
@@ -38,7 +38,7 @@
     transform: scale(1.05);
 }
 
-.category .see-apps {
+.article .see-apps {
     position: absolute;
     top: 10px;
     right: 20px;
@@ -47,13 +47,13 @@
     font-weight: bold;
 }
 
-.category .see-apps:hover {
+.article .see-apps:hover {
     color: #55D555;
     text-decoration: underline;
     transition: all 0.5s;
 }
 
-.body-category {
+.body-article {
     margin: 30px;
     padding-top: 30px;
 }
@@ -132,7 +132,7 @@ button:hover {
 
 @media (max-width:940px) {
 
-    .category,
+    .article,
     button {
         width: 320px;
 
@@ -148,7 +148,7 @@ button:hover {
 
 @media screen and (max-width: 760px) {
 
-    .category,
+    .article,
     button {
         width: 280px;
 
@@ -157,7 +157,7 @@ button:hover {
 
 @media screen and (max-width: 710px) {
 
-    .category,
+    .article,
     button {
         width: 400px;
 
@@ -166,9 +166,9 @@ button:hover {
 
 @media screen and (max-width: 490px) {
 
-    .category,
+    .article,
     button {
         width: 320px;
 
     }
-} */
+}
