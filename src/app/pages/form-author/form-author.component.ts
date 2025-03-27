@@ -32,7 +32,7 @@ export class FormAuthorComponent {
         id: this.authorForm.value.id!,
         firstName: this.authorForm.value.firstName!,
         middleName: this.authorForm.value.middleName!,
-        firstlastName: this.authorForm.value.lastName!,
+        firstLastName: this.authorForm.value.lastName!,
         secondLastName: this.authorForm.value.secondLastName!,
         nationality: this.authorForm.value.nationality!,
 

@@ -5,31 +5,27 @@
 }
 
 <div class="main">
+
   <h2>Authors</h2>
 
   <section class="main-container">
     
-    <button (click)="addAuthor()">
+    <button class="new" (click)="addAuthor()">
       New Author
       <i class="fs fa-plus"></i>
     </button>
 
     @for (item of list; track item.id; ; let i = $index) {
     <article class="article">
-      <!-- <a class="see-apps" id="{{item.id}}" (click)="seeApps(item.id!)">See apps <fa-icon
-          [icon]="seeAppsIcon"></fa-icon></a> -->
       <div class="body-category">
-        <h3>{{ item.firstName + item.firstlastName }}</h3>
-        <p>{{ 'Nationatility:' + item.nationality }}</p>
-        <p>{{ 'ID:' + item.id }}</p>
+        <h3>{{ item.firstName + ' ' + (item.middleName ? item.middleName : ' ') +  ' ' + item.firstLastName + ' ' + item.secondLastName }}</h3>
+        <p>{{ 'Nationatility: ' + item.nationality }}</p>
+        <p>{{ 'ID: ' + item.id }}</p>
       </div>
       <div class="icons">
-        
-        <a class="delIcon" (click)="deleteAuthor(item.id!, item.firstName! + item.firstlastName!)"><i class="fs fa-trash"></i></a>
-          
-        <a class="edIcon" (click)="editAuthor(item.id!)"><i class="fs fa-pen"></i></a>
+        <button class="btn del"><i class="fas fa-trash"></i> Delete</button>
+        <button class="btn upt" (click)="editAuthor(item.id)"><i class="fas fa-pen"></i> Update</button>
       </div>
-      
     </article>
     }
   </section>
