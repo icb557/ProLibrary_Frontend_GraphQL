@@ -1,37 +1,41 @@
-<div class="users-container">
-    <div class="form-container">
-        <h2>User Management</h2>
-
-        <div class="search-section">
-            <input type="text" [(ngModel)]="searchUsername" placeholder="Search by username"
-                (keyup.enter)="searchUser()">
-            <button (click)="searchUser()">Search</button>
-        </div>
-        <button (click)="formAdd()">Add User</button>
-
-
-        <table class="users-table">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Role</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let user of users">
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.role }}</td>
-                    <td>
-                        <button>Edit</button>
-                        <button (click)="deleteUser(user.username)">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div *ngIf="users.length === 0" class="no-users">
-            No users found
+<body>
+    <app-navbar></app-navbar>
+    <div class="users-container">
+        <div class="form-container">
+            <h2>User Management</h2>
+    
+            <div class="search-section">
+                <input type="text" [(ngModel)]="searchUsername" placeholder="Search by username"
+                    (keyup.enter)="searchUser()">
+                <button (click)="searchUser()">Search</button>
+            </div>
+            <button (click)="formAdd()">Add User</button>
+    
+    
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users">
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.role }}</td>
+                        <td>
+                            <button>Edit</button>
+                            <button (click)="deleteUser(user.username)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            <div *ngIf="users.length === 0" class="no-users">
+                No users found
+            </div>
         </div>
     </div>
-</div>
+    <app-footer></app-footer>
+</body>

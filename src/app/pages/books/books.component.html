@@ -1,1 +1,48 @@
-<p>books works!</p>
+<body>
+    <app-navbar></app-navbar>
+    <div class="users-container">
+        <div class="form-container">
+            <h2>Book Management</h2>
+    
+            <div class="search-section">
+                <input type="text" [(ngModel)]="searchIsbn" placeholder="Search by username"
+                    (keyup.enter)="searchBook()">
+                <button (click)="searchBook()">Search</button>
+            </div>
+            <button (click)="formAdd()">Add Book</button>
+    
+    
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>ISBN</th>
+                        <th>Title</th>
+                        <th>Editorial</th>
+                        <th>Genre</th>
+                        <th>Publication</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let book of books">
+                        <td>{{ book.isbn }}</td>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.editorial }}</td>
+                        <td>{{ book.genre }}</td>
+                        <td>{{ book.publicationYear }}</td>
+                        <td>
+                            <button (click)="formEdit(book.isbn)">Edit</button>
+                            <button (click)="deleteBook(book.isbn)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            <div *ngIf="books.length === 0" class="no-users">
+                No users found
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</body>
+

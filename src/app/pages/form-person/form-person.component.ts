@@ -6,9 +6,11 @@ import { PersonService } from '../../services/person.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, isEmpty, of, switchMap, tap } from 'rxjs';
 import Swal from 'sweetalert2';
+import { FooterComponent } from "../../components/footer/footer.component";
+import { NavbarComponent } from "../../components/navbar/navbar.component";
 @Component({
   selector: 'app-form-person',
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, FooterComponent, NavbarComponent],
   templateUrl: './form-person.component.html',
   styleUrl: './form-person.component.css'
 })

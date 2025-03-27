@@ -1,36 +1,41 @@
-<form class="author-form" [formGroup]="authorForm">
-    <h2>Author Management</h2>
+<body>
+    <app-navbar></app-navbar>
+    <form class="author-form" [formGroup]="authorForm">
+        <h2>Author Management</h2>
 
-    <label for="id">ID</label>
+        <label for="id">ID</label>
 
-    <input type="text" name="id" id="id" formControlName="id" placeholder="Input the ID">
+        <input type="text" name="id" id="id" formControlName="id" placeholder="Input the ID">
 
 
-    <label for="firstname">First Name</label>
-    <input type="text" name="firstName" id="firstname" formControlName="firstName" placeholder="Input the first name">
+        <label for="firstname">First Name</label>
+        <input type="text" name="firstName" id="firstname" formControlName="firstName"
+            placeholder="Input the first name">
 
-    <label for="middlename">Middle Name</label>
-    <input type="text" name="middleName" id="middlename" formControlName="middleName"
-        placeholder="Input the middle name">
+        <label for="middlename">Middle Name</label>
+        <input type="text" name="middleName" id="middlename" formControlName="middleName"
+            placeholder="Input the middle name">
 
-    <label for="lastname">First Last Name </label>
-    <input type="text" name="lastname" id="lastname" formControlName="firstLastName"
-        placeholder="Input the first last name">
+        <label for="lastname">Primer Apellido</label>
+        <input type="text" name="lastname" id="lastname" formControlName="firstLastName"
+            placeholder="Input the first last name">
 
-    <label for="secondlastname">Second Last Name</label>
-    <input type="text" name="secondLastName" id="secondlastname" formControlName="secondLastName"
-        placeholder="Input the second last name">
+        <label for="secondlastname">Segundo Apellido</label>
+        <input type="text" name="secondLastName" id="secondlastname" formControlName="secondLastName"
+            placeholder="Input the second last name">
 
-    <label for="nationality">Nationality</label>
-    <input type="text" name="nationality" id="nationality" formControlName="nationality"
-        placeholder="Input the nationality">
+        <label for="nationality">Nacionalidad</label>
+        <input type="text" name="nationality" id="nationality" formControlName="nationality"
+            placeholder="Input the nationality">
 
-    <div class="form-buttons">
-        <button type="submit" class="btn-save" (click)="saveAuthor()">
-            <i class="fas fa-save"></i> Save
-        </button>
-        <button type="button" class="btn-cancel" (click)="goBack()">
-            <i class="fas fa-times"></i> Cancel
-        </button>
-    </div>
-</form>
+        <div class="form-buttons">
+            <button type="submit" class="btn-save" (click)="saveAuthor()">
+                <i class="fas fa-save"></i> Save
+            </button>
+            <button type="button" class="btn-cancel" (click)="goBack()">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+        </div>
+    </form>
+    <app-footer></app-footer>
+</body>

@@ -1,32 +1,35 @@
-<app-navbar></app-navbar>
 
-@if (showForm) {
-<app-form-author></app-form-author>
-}
-
-<div class="main">
-
-  <h2>Authors</h2>
-
-  <section class="main-container">
-    
-    <button class="new" (click)="addAuthor()">
-      New Author
-      <i class="fs fa-plus"></i>
-    </button>
-
-    @for (item of list; track item.id; ; let i = $index) {
-    <article class="article">
-      <div class="body-category">
-        <h3>{{ item.firstName + ' ' + (item.middleName ? item.middleName : ' ') +  ' ' + item.firstLastName + ' ' + item.secondLastName }}</h3>
-        <p>{{ 'Nationatility: ' + item.nationality }}</p>
-        <p>{{ 'ID: ' + item.id }}</p>
-      </div>
-      <div class="icons">
-        <button class="btn del" (click)="deleteAuthor(item.id, item.firstName + item.firstLastName)"><i class="fas fa-trash"></i> Delete</button>
-        <button class="btn upt" (click)="editAuthor(item.id)"><i class="fas fa-pen"></i> Update</button>
-      </div>
-    </article>
-    }
-  </section>
-</div>
+<body>
+  <app-navbar></app-navbar>
+  @if (showForm) {
+  <app-form-author></app-form-author>
+  }
+  
+  <div class="main">
+  
+    <h2>Authors</h2>
+  
+    <section class="main-container">
+      
+      <button class="new" (click)="addAuthor()">
+        New Author
+        <i class="fs fa-plus"></i>
+      </button>
+  
+      @for (item of list; track item.id; ; let i = $index) {
+      <article class="article">
+        <div class="body-category">
+          <h3>{{ item.firstName + ' ' + (item.middleName ? item.middleName : ' ') +  ' ' + item.firstLastName + ' ' + item.secondLastName }}</h3>
+          <p>{{ 'Nationatility: ' + item.nationality }}</p>
+          <p>{{ 'ID: ' + item.id }}</p>
+        </div>
+        <div class="icons">
+          <button class="btn del" (click)="deleteAuthor(item.id, item.firstName + item.firstLastName)"><i class="fas fa-trash"></i> Delete</button>
+          <button class="btn upt" (click)="editAuthor(item.id)"><i class="fas fa-pen"></i> Update</button>
+        </div>
+      </article>
+      }
+    </section>
+  </div>
+  <app-footer></app-footer>
+</body>
