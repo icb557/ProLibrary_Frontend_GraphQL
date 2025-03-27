@@ -31,15 +31,27 @@ export const routes: Routes = [{
     component: UsersComponent
 }, {
     title: 'FormPerson',
-    path: 'admin/formPerson',
+    path: 'admin/users/formPerson/create',
+    component: FormPersonComponent
+}, {
+    title: 'FormPerson',
+    path: 'admin/users/formPerson/edit/:username',
     component: FormPersonComponent
 }, {
     title: 'FormAuthor',
-    path: 'admin/formAuthor',
+    path: 'admin/authors/formAuthor/create',
+    component: FormAuthorComponent
+}, {
+    title: 'FormAuthor',
+    path: 'admin/authors/formAuthor/edit/:id',
     component: FormAuthorComponent
 }, {
     title: 'FormBook',
-    path: 'admin/formBook',
+    path: 'admin/books/formBook/create',
+    component: FormBookComponent
+}, {
+    title: 'FormBook',
+    path: 'admin/books/formBook/edit/:isbn',
     component: FormBookComponent
 }, {
     title: 'Employee',

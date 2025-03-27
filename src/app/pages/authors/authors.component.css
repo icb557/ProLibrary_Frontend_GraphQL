@@ -12,6 +12,7 @@
 .main-container {
     overflow-y: hidden;
     margin-top: 10px;
+    padding: 20px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     gap: 20px;
@@ -24,9 +25,11 @@
     height: 250px;
     background-size: cover;
     background-position: center;
+    background-color: rgb(238, 238, 238);
     border-radius: 10px;
+    padding: 20px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.486);
     transition: all .5s ease;
 }
 
@@ -36,21 +39,6 @@
     -moz-box-shadow: 0px 14px 32px 0px rgba(5, 127, 215, 0.5);
     box-shadow: 0px 14px 32px 0px rgba(5, 127, 215, 0.5);
     transform: scale(1.05);
-}
-
-.article .see-apps {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    text-decoration: none;
-    color: #1A2A5A;
-    font-weight: bold;
-}
-
-.article .see-apps:hover {
-    color: #55D555;
-    text-decoration: underline;
-    transition: all 0.5s;
 }
 
 .body-article {
@@ -80,14 +68,14 @@ p {
     right: 20px;
 }
 
-.delIcon,
+/* .delIcon,
 .edIcon {
     font-size: 30px;
     margin: 10px;
 }
 
 .delIcon {
-    color: #ffffff;
+    color: #ff0000;
 }
 
 .delIcon:hover {
@@ -104,9 +92,44 @@ p {
     color: #057FD7;
     transition: all 0.5s;
     cursor: pointer;
+} */
+
+/* Botones */
+.btn {
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: #1f1f1f3b 1px solid;
+    transition: 0.3s ease-in-out;
+    background-color: white;
+    color: var(--blue);
+    height: auto;
+    width: fit-content;
 }
 
-button {
+/* Efectos al pasar el cursor */
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.del{
+    color: #e21010;
+}
+
+.del:hover{
+    background-color: #e21010;
+    color: white;
+}
+
+.upt:hover{
+    background-color: var(--blue);
+    color: white;
+}
+
+.new {
     width: 400px;
     height: 250px;
     transition: all .5s ease;
@@ -120,7 +143,7 @@ button {
     color: #969FAA;
 }
 
-button:hover {
+.new:hover {
     background-color: #969FAA;
     color: #70767e;
     cursor: pointer;

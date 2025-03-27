@@ -76,10 +76,10 @@ export class AuthorsComponent {
 
 
   editAuthor(id: string) {
-    this.router.navigate([`/admin/authors/edit/${id}`])
+    this.router.navigate([`admin/authors/formAuthor/edit/${id}`])
   }
 
   addAuthor() {
-    this.router.navigate(['/admin/authors/create'])
+    this.router.navigate(['admin/authors/formAuthor/create'])
   }
 }
