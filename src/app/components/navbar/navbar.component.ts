@@ -16,7 +16,11 @@ export class NavbarComponent {
   }
 
   goHome() {
-    this.router.navigate([`/${this.role}`]);
+    if(this.role == 'ROLE_ADMIN'){
+      this.router.navigate([`/admin`]);
+    } else {
+      this.router.navigate([`/employee`]);
+    }
   }
 
   logout() {

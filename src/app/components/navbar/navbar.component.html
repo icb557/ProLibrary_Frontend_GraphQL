@@ -5,9 +5,9 @@
             @if (role === 'ROLE_ADMIN') {
                 <h1>Admin Panel</h1>
                 <li><a (click)="goHome()">Home</a></li>
-                <li><a [routerLink]="['/authors']">Authors</a></li>
-                <li><a [routerLink]="['/books']">Books</a></li>
-                <li><a [routerLink]="['/users']">Users</a></li>
+                <li><a [routerLink]="['/admin/authors']">Authors</a></li>
+                <li><a [routerLink]="['/admin/books']">Books</a></li>
+                <li><a [routerLink]="['/admin/users']">Users</a></li>
             } @else {
                 <h1>Employee Panel</h1>
             }

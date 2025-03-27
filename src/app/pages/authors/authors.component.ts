@@ -7,10 +7,11 @@ import { Author } from '../../interfaces/author';
 import { AuthorService } from '../../services/author.service';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FooterComponent } from "../../components/footer/footer.component";
 
 @Component({
   selector: 'app-authors',
-  imports: [NavbarComponent, RouterLink, NgStyle, FormAuthorComponent],
+  imports: [NavbarComponent, RouterLink, NgStyle, FormAuthorComponent, FooterComponent],
   templateUrl: './authors.component.html',
   styleUrl: './authors.component.css'
 })

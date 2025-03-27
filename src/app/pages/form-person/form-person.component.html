@@ -1,33 +1,37 @@
-<div class="form-container">
-    <form class="person-form" [formGroup]="personForm">
-        <h2>Users Managment</h2>
-
-        <div class="form-group">
-            <label for="username"><i class="fas fa-user"></i> Username </label>
-            <input type="text" id="username" formControlName="username" placeholder="Input the username">
-        </div>
-
-        <div class="form-group">
-            <label for="password"><i class="fas fa-lock"></i> Password</label>
-            <input type="password" id="password" formControlName="password" placeholder="Input the password">
-        </div>
-
-        <div class="form-group">
-            <label for="role"><i class="fas fa-user-tag"></i> Role</label>
-            <select id="role" formControlName="role">
-                <option value="" disabled selected>Select the role</option>
-                <option value="admin">Admin</option>
-                <option value="empleado">Employee</option>
-            </select>
-        </div>
-
-        <div class="form-buttons">
-            <button type="button" class="btn-save" (click)="createPerson()">
-                <i class="fas fa-save"></i> Save
-            </button>
-            <button type="button" class="btn-reset" (click)="personForm.reset()">
-                <i class="fas fa-undo"></i> Clear
-            </button>
-        </div>
-    </form>
-</div>
+<body>
+    <app-navbar></app-navbar>
+    <div class="form-container">
+        <form class="person-form" [formGroup]="personForm">
+            <h2>Users Managment</h2>
+    
+            <div class="form-group">
+                <label for="username"><i class="fas fa-user"></i> Username </label>
+                <input type="text" id="username" formControlName="username" placeholder="Input the username">
+            </div>
+    
+            <div class="form-group">
+                <label for="password"><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="password" formControlName="password" placeholder="Input the password">
+            </div>
+    
+            <div class="form-group">
+                <label for="role"><i class="fas fa-user-tag"></i> Role</label>
+                <select id="role" formControlName="role">
+                    <option value="" disabled selected>Select the role</option>
+                    <option value="admin">Admin</option>
+                    <option value="empleado">Employee</option>
+                </select>
+            </div>
+    
+            <div class="form-buttons">
+                <button type="button" class="btn-save" (click)="createPerson()">
+                    <i class="fas fa-save"></i> Save
+                </button>
+                <button type="button" class="btn-reset" (click)="personForm.reset()">
+                    <i class="fas fa-undo"></i> Clear
+                </button>
+            </div>
+        </form>
+    </div>
+    <app-footer></app-footer>
+</body>

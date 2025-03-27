@@ -7,10 +7,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, isEmpty, of, switchMap, tap } from 'rxjs';
 import { Author } from '../../interfaces/author';
 import Swal from 'sweetalert2';
+import { FooterComponent } from "../../components/footer/footer.component";
+import { NavbarComponent } from "../../components/navbar/navbar.component";
 
 @Component({
   selector: 'app-form-author',
-  imports: [RouterLink, FormsModule, ReactiveFormsModule],
+  imports: [RouterLink, FormsModule, ReactiveFormsModule, FooterComponent, NavbarComponent],
   templateUrl: './form-author.component.html',
   styleUrl: './form-author.component.css'
 })
