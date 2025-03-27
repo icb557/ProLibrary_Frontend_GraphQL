@@ -1,10 +1,8 @@
 export interface Author {
-    id?: String,
+    id: String,
     firstName: String,
-    middleName: String,
+    middleName?: String,
     lastName: String,
     secondLastName: String,
-    nationality: String,
-    createdAt?: string,
-    updatedAt?: string
+    nationality: String
 }
