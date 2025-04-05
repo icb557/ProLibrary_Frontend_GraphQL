@@ -76,6 +76,14 @@ export class PersonService {
           password: person.password,
           role: person.role
         }
+      },
+      // Update cache to include the new person
+      update: (cache, { data }) => {
+        if (!data) return;
+        
+        const newPerson = data.createPerson;
+        
+        updateGQLCache(cache, newPerson, 'create')
       }
     }).pipe(
       map(result => result.data?.createPerson as Person)
@@ -93,7 +101,8 @@ export class PersonService {
   getPersonByUsername(username: string): Observable<Person> {
     return this.apollo.watchQuery<{ getPersonById: Person }>({
       query: GET_PERSON,
-      variables: { username }
+      variables: { username },
+      fetchPolicy: 'network-only' // Ensure we always fetch from the server
     }).valueChanges.pipe(
       map(result => result.data.getPersonById as Person)
     );
@@ -102,7 +111,8 @@ export class PersonService {
   searchPersonByUsername(username: string): Observable<Person[]> {
     return this.apollo.watchQuery<{ searchPersonByUsername: Person[] }>({
       query: SEARCH_PERSON,
-      variables: { username }
+      variables: { username },
+      fetchPolicy: 'network-only' // Ensure we always fetch from the server
     }).valueChanges.pipe(
       map(result => result.data.searchPersonByUsername as Person[])
     );
@@ -118,6 +128,14 @@ export class PersonService {
           password: person.password,
           role: person.role
         }
+      },
+      // Update cache to include the new person
+      update: (cache, { data }) => {
+        if (!data) return;
+        
+        const updatedPerson = data.updatePerson;
+        
+        updateGQLCache(cache, updatedPerson, 'update')
       }
     }).pipe(
       map(result => result.data?.updatePerson as Person)
@@ -127,10 +145,51 @@ export class PersonService {
   deletePerson(username: string): Observable<boolean> {
     return this.apollo.mutate<{ deletePerson: boolean }>({
       mutation: DELETE_PERSON,
-      variables: { username }
+      variables: { username },
+      // Update cache to remove deleted person
+      update: (cache) => {
+        const person: Person = {
+          username,
+          password: '', // Password is not needed for cache update
+          role: '' // Role is not needed for cache update
+        }
+        updateGQLCache(cache, person, 'delete')
+      }
     }).pipe(
       map(result => result.data?.deletePerson || false)
     );
   }
 
+}
+
+function updateGQLCache (cache: ApolloCache<any>, newPerson: Person, operation: string) {
+    // Read the query from cache
+    const existingData = cache.readQuery<{ getPeople: Person[] }>({
+        query: GET_PEOPLE
+    });
+    
+    let getPeople: Person[] = []
+    switch (operation) {
+        case 'create':
+            getPeople = [...existingData!.getPeople, newPerson]
+            break;
+        case 'update':
+          getPeople = existingData!.getPeople.map(p => p.username === newPerson.username ? newPerson : p)
+          break;
+        case 'delete':
+            getPeople = existingData!.getPeople.filter(p => p.username !== newPerson.username)
+            break;
+        default:
+            getPeople = existingData!.getPeople          
+            break;            
+    }
+    // Write back to the cache with new person included
+    if (existingData) {
+        cache.writeQuery({
+        query: GET_PEOPLE,
+        data: {
+            getPeople
+        }
+        });
+    }
 }

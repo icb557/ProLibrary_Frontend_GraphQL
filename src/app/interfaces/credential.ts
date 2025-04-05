@@ -1,8 +1,9 @@
 export interface Credential {
     username: string,
-    password: string
+    password: string,
 }
 
-export interface JwtToken {
-    token: string
-}
+// export interface JwtToken {
+//     token: string,
+//     __typename?: string
+// }
