@@ -1,19 +1,30 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Credential, JwtToken } from '../interfaces/credential';
+import { Apollo, gql } from 'apollo-angular';
+import { Observable, map } from 'rxjs';
+import { Credential } from '../interfaces/credential';
+
+// Define GraphQL mutation for login
+const LOGIN = gql`
+  mutation Login($username: String!, $password: String!) {
+    login(credentials: { username: $username, password: $password })
+  }
+`;
 
 @Injectable({
   providedIn: 'root'
 })
 export class CredentialsService {
-  private myAppUrl: string
+  constructor(private apollo: Apollo) {}
 
-  constructor(private http: HttpClient) {
-    this.myAppUrl = 'http://localhost:8080';
-  }
-
-  login(creds: Credential): Observable<JwtToken> {
-    return this.http.post<JwtToken>(`${this.myAppUrl}/login`, creds);
+  login(creds: Credential): Observable<string> {
+    return this.apollo.mutate<{ login: string }>({
+      mutation: LOGIN,
+      variables: {
+        username: creds.username,
+        password: creds.password
+      }
+    }).pipe(
+      map(result => result.data?.login as string)
+    );
   }
 }

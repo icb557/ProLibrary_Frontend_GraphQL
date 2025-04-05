@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { HttpErrorResponse } from '@angular/common/http';
 import { CredentialsService } from '../../services/credentials.service';
 import { Credential } from '../../interfaces/credential';
 import { JwtService } from '../../services/jwt.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ApolloError } from '@apollo/client/core';
 
 @Component({
   selector: 'app-login',
@@ -31,9 +31,9 @@ export class LoginComponent {
       }
 
       this._credentialsService.login(creds).subscribe({
-        next: (data) => {
-          const token = data.token
-          if (!data) {
+        next: (token) => {
+
+          if (!token) {
             console.log("Cannot get token")
           } else{
             const username = this._jwtService.getUsername(token!)
@@ -47,18 +47,38 @@ export class LoginComponent {
               this.router.navigate(['/employee'])
             }
           }
-        }, error: (e: HttpErrorResponse) => {
+        }, 
+        error: (error: ApolloError) => {
+          // Extract the error message from GraphQL error response
+          const errorMessage = this.extractGraphQLErrorMessage(error);
+          
           Swal.fire({
             title: "Login Failed",
-            html: `<p id="loginError">${e.error.message}</p>`,
+            html: `<p id="loginError">${errorMessage}</p>`,
             icon: "error",
             showConfirmButton: false,
             timer: 1200
           })
         }
       })
-
     }
+  }
+
+  // Helper method to extract error message from GraphQL error
+  private extractGraphQLErrorMessage(error: ApolloError): string {
+    // Check for GraphQL errors array first
+    if (error.graphQLErrors && error.graphQLErrors.length > 0) {
+      // Try to extract the message from the first GraphQL error
+      return error.graphQLErrors[0].message || 'Authentication failed';
+    }
+    
+    // Check for network errors
+    if (error.networkError) {
+      return 'Network error. Please check your connection and try again.';
+    }
+    
+    // Fallback error message
+    return 'Authentication failed. Please try again.';
   }
 
   validateRole(role: string): boolean {
@@ -66,20 +86,8 @@ export class LoginComponent {
   }
 
   validateData(): boolean {
-
-    // const usernameRegex = /^[A-Z][a-z]{6}[0-9]$/;
     const passwordRegex = /^.{8,}$/;
 
-    // if (!usernameRegex.test(this.username)) {
-    //   Swal.fire({
-    //     title: "Invalid Username",
-    //     html: '<p id="usernameError">Username must have the first capital letter, 6 lowercase letters and a number.</p>',
-    //     icon: "info",
-    //     showConfirmButton: false,
-    //     timer: 1200
-    //   })
-    //   return false
-    // }
     if (!passwordRegex.test(this.password)) {
       Swal.fire({
         title: "Invalid Password",

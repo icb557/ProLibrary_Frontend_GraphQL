@@ -3,6 +3,5 @@ export interface Person {
     username: string,
     password: string,
     role: string,
-    createdAt?: string,
-    updatedAt?: string
+    __typename?: string
 }

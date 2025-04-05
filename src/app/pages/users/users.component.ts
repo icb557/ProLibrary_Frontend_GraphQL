@@ -3,7 +3,6 @@ import { Person } from '../../interfaces/person';
 import { PersonService } from '../../services/person.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { FooterComponent } from "../../components/footer/footer.component";
@@ -13,7 +12,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, NavbarComponent, FooterComponent]
+  imports: [CommonModule, FormsModule, NavbarComponent, FooterComponent]
 })
 export class UsersComponent implements OnInit {
   users: Person[] = [];
