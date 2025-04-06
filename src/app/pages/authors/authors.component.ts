@@ -82,6 +82,6 @@ export class AuthorsComponent {
   }
 
   addAuthor() {
-    this.router.navigate(['admin/users/formPerson/create'])
+    this.router.navigate(['admin/authors/formAuthor/create'])
   }
 }
