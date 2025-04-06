@@ -7,11 +7,10 @@
             <div class="search-section">
                 <input type="text" [(ngModel)]="searchUsername" placeholder="Search by username"
                     (keyup.enter)="searchUser()">
-                <button (click)="searchUser()">Search</button>
+                <button class="btn" (click)="searchUser()">Search</button>
             </div>
-            <button (click)="formAdd()">Add User</button>
-    
-    
+            <button class="btn" (click)="formAdd()">Add User</button>
+                
             <table class="users-table">
                 <thead>
                     <tr>
@@ -23,7 +22,7 @@
                 <tbody>
                     <tr *ngFor="let user of users">
                         <td>{{ user.username }}</td>
-                        <td>{{ user.role }}</td>
+                        <td>{{ user.role.toUpperCase() }}</td>
                         <td>
                             <button (click)="formEdit(user.username)">Edit</button>
                             <button (click)="deleteUser(user.username)">Delete</button>

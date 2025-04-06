@@ -5,11 +5,11 @@
             <h2>Book Management</h2>
     
             <div class="search-section">
-                <input type="text" [(ngModel)]="searchIsbn" placeholder="Search by username"
+                <input type="text" [(ngModel)]="searchIsbn" placeholder="Search by title"
                     (keyup.enter)="searchBook()">
-                <button (click)="searchBook()">Search</button>
+                <button class="btn" (click)="searchBook()">Search</button>
             </div>
-            <button (click)="formAdd()">Add Book</button>
+            <button class="btn" (click)="formAdd()">Add Book</button>
     
     
             <table class="users-table">
