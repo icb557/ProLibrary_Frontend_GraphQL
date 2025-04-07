@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { Router, RouterLink } from '@angular/router';
-import { NgStyle } from '@angular/common';
+import { Router } from '@angular/router';
 import { FormAuthorComponent } from '../form-author/form-author.component';
 import { Author } from '../../interfaces/author';
 import { AuthorService } from '../../services/author.service';
@@ -11,7 +10,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
 
 @Component({
   selector: 'app-authors',
-  imports: [NavbarComponent, RouterLink, NgStyle, FormAuthorComponent, FooterComponent],
+  imports: [NavbarComponent, FormAuthorComponent, FooterComponent],
   templateUrl: './authors.component.html',
   styleUrl: './authors.component.css'
 })

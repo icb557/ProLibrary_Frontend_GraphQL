@@ -4,5 +4,6 @@ export interface Author {
     middleName?: string,
     firstLastName: string,
     secondLastName: string,
-    nationality: string
+    nationality: string,
+    __typename?: string
 }
