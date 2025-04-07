@@ -41,7 +41,6 @@ export class FormBookComponent {
   }
 
   ngOnInit() {
-    console.log('FormBookComponent initialized');
     if (this.router.url === `/admin/books/formBook/edit/${this.id}`) {
       this.action = 'edit';
       this.getBook();
@@ -51,10 +50,8 @@ export class FormBookComponent {
   }
 
   getBook() {
-    console.log('Fetching book with ID:', this.id);
     this._BookService.getBookById(this.id).subscribe({
       next: (data) => {
-        console.log('Book fetched:', data);
         this.BookForm.setValue({
           isbn: data.isbn,
           title: data.title,
@@ -77,7 +74,6 @@ export class FormBookComponent {
   }
 
   async saveBook() {
-    console.log('saveBook method called');
     
     if (!this.BookForm.valid) {
       console.log('Form is invalid:', this.BookForm.errors);
@@ -91,11 +87,9 @@ export class FormBookComponent {
     }
     
     const formValues = this.BookForm.value;
-    console.log('Form values:', formValues);
     
     // Extract author IDs from the comma-separated string
     const authorIds = formValues.authors!.split(',').map(id => id.trim()).filter(id => id !== '');
-    console.log('Author IDs:', authorIds);
     
     if (authorIds.length === 0) {
       console.log('No author IDs provided');
@@ -118,14 +112,12 @@ export class FormBookComponent {
           const author = await firstValueFrom(this.authorService.getAuthorById(authorId));
           delete author.__typename;
           authors.push(author);
-          console.log(`Author ${authorId} fetched:`, author);
         } catch (error) {
           console.error(`Error fetching author ${authorId}:`, error);
           throw new Error(`Could not fetch author with ID: ${authorId}`);
         }
       }
       
-      console.log('All authors fetched:', authors);
       
       // Create the book object with the fetched authors
       const book: Book = {
@@ -137,20 +129,15 @@ export class FormBookComponent {
         authors: authors
       };
       
-      console.log('Book object created:', book);
       
       // Perform create or update based on action
       if (this.action === 'add') {
-        console.log('Creating new book');
         // Convert observable to promise
         const result = await firstValueFrom(this._BookService.createBook(book));
-        console.log('Book created:', result);
         this.showSuccessAndNavigate('created');
       } else {
-        console.log('Updating book with ID:', this.id);
         // Convert observable to promise
         const result = await firstValueFrom(this._BookService.updateBook(this.id, book));
-        console.log('Book updated:', result);
         this.showSuccessAndNavigate('updated');
       }
     } catch (error) {

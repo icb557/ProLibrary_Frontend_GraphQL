@@ -6,6 +6,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { Book } from '../../interfaces/book';
 import { BookService } from '../../services/book.service'; // Updated import path
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-books',
@@ -35,7 +36,6 @@ export class BooksComponent {
     this.bookService.getBooks().subscribe({
       next: (data: Book[]) => {
         this.books = data;
-        console.log('Loaded books:', this.books);
       },
       error: (error) => {
         console.error('Error loading books', error);
@@ -52,7 +52,6 @@ export class BooksComponent {
     this.bookService.searchBook(this.searchTitle).subscribe({
       next: (result: Book[]) => {
         this.books = result;
-        console.log('Search result:', this.books);
       },
       error: (error) => {
         console.error('Error searching Book', error);
@@ -66,9 +65,22 @@ export class BooksComponent {
       this.bookService.deleteBook(isbn).subscribe({
         next: () => {
           this.books = this.books.filter(book => book.isbn !== isbn);
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: `Book deleted!!`,
+            showConfirmButton: false,
+            timer: 1500
+          })
         },
-        error: (error) => {
-          console.error('Error deleting Book', error);
+        error: () => {
+          Swal.fire({
+            icon: "error",
+            title: "Error Deleting Book",
+            text: `Try again later`,
+            showConfirmButton: false,
+            timer: 1500
+          });
         }
       });
     }

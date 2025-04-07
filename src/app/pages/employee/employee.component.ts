@@ -6,6 +6,7 @@ import { Book } from '../../interfaces/book';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-employee',
   imports: [CommonModule, FormsModule, NavbarComponent, FooterComponent],
@@ -29,10 +30,16 @@ loadbooks() {
     this.bookService.getBooks().subscribe({
       next: (data: Book[]) => {
         this.books = data;
-        console.log('Loaded books:', this.books);
       },
       error: (error) => {
         console.error('Error loading books', error);
+        Swal.fire({
+          icon: "error",
+          title: "Error Loading Books",
+          text: `Try again later`,
+          showConfirmButton: false,
+          timer: 1500
+        });
       }
     });
   }
@@ -47,10 +54,16 @@ loadbooks() {
     this.bookService.searchBook(this.searchTitle).subscribe({
       next: (result: Book[]) => {
         this.books = result;
-        console.log('Search result:', this.books);
       },
       error: (error) => {
         console.error('Error searching Book', error);
+        Swal.fire({
+          icon: "error",
+          title: "Error Loading Books",
+          text: `Try again later`,
+          showConfirmButton: false,
+          timer: 1500
+        });
         this.books = []; // Clear books on error
       }
     });

@@ -51,7 +51,6 @@ export class AuthorsComponent {
       if (result.isConfirmed) {
         this._AuthorService.deleteAuthor(id).subscribe({
           next: (data) => {
-            console.log('data', data)
             if (!data) {
               Swal.fire({
                 icon: "error",

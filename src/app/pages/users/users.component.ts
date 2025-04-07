@@ -39,7 +39,6 @@ export class UsersComponent implements OnInit {
     this.personService.getPeople().subscribe({
       next: (data: Person[]) => {
         this.users = data;
-        console.log('Loaded users:', this.users);
       },
       error: (error) => {
         console.error('Error loading users', error);
@@ -57,7 +56,6 @@ export class UsersComponent implements OnInit {
     this.personService.searchPersonByUsername(this.searchUsername).subscribe({
       next: (result: Person[]) => {
         this.users = result;
-        console.log('Search result:', this.users);
       },
       error: (error) => {
         console.error('Error searching user', error);
