@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { FooterComponent } from '../../components/footer/footer.component';
-import { BookService } from '../../services/book_rest.service';
+import { BookService } from '../../services/book.service';
 import { Book } from '../../interfaces/book';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

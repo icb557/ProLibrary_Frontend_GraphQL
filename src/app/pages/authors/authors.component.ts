@@ -50,16 +50,27 @@ export class AuthorsComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this._AuthorService.deleteAuthor(id).subscribe({
-          next: () => {
-            Swal.fire({
-              icon: "success",
-              title: "Success",
-              text: `Author ${name} deleted!!`,
-              showConfirmButton: false,
-              timer: 1500
-            }).then(() => {
-              window.location.reload()
-            })
+          next: (data) => {
+            console.log('data', data)
+            if (!data) {
+              Swal.fire({
+                icon: "error",
+                title: "Error Deleting Author",
+                text: `Make sure the author is not associated with any book`,
+                showConfirmButton: false,
+                timer: 2000
+              });
+            } else {
+              Swal.fire({
+                icon: "success",
+                title: "Success",
+                text: `Author ${name} deleted!!`,
+                showConfirmButton: false,
+                timer: 1500
+              }).then(() => {
+                window.location.reload()
+              })
+            }
           },
           error: (e: HttpErrorResponse) => {
             Swal.fire({
