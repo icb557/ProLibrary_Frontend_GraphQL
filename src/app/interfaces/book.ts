@@ -6,5 +6,6 @@ export interface Book {
     editorial: string;
     genre: string;
     publicationYear: number;
-    authors: Author[]
+    authors: Author[],
+    __typename?: string
 }

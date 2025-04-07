@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Person } from '../../interfaces/person';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthorService } from '../../services/author.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { catchError, isEmpty, of, switchMap, tap } from 'rxjs';
 import { Author } from '../../interfaces/author';
 import Swal from 'sweetalert2';
 import { FooterComponent } from "../../components/footer/footer.component";
@@ -12,7 +10,7 @@ import { NavbarComponent } from "../../components/navbar/navbar.component";
 
 @Component({
   selector: 'app-form-author',
-  imports: [RouterLink, FormsModule, ReactiveFormsModule, FooterComponent, NavbarComponent],
+  imports: [FormsModule, ReactiveFormsModule, FooterComponent, NavbarComponent],
   templateUrl: './form-author.component.html',
   styleUrl: './form-author.component.css'
 })
@@ -60,7 +58,6 @@ export class FormAuthorComponent {
 
   saveAuthor() {
     if (this.authorForm.valid) {
-      console.log('wwwwwww')
       const author: Author = {
         id: this.authorForm.value.id!,
         firstName: this.authorForm.value.firstName!,

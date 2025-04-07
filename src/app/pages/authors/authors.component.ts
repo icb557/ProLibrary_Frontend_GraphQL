@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { Router, RouterLink } from '@angular/router';
-import { NgStyle } from '@angular/common';
+import { Router } from '@angular/router';
 import { FormAuthorComponent } from '../form-author/form-author.component';
 import { Author } from '../../interfaces/author';
 import { AuthorService } from '../../services/author.service';
@@ -11,7 +10,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
 
 @Component({
   selector: 'app-authors',
-  imports: [NavbarComponent, RouterLink, NgStyle, FormAuthorComponent, FooterComponent],
+  imports: [NavbarComponent, FormAuthorComponent, FooterComponent],
   templateUrl: './authors.component.html',
   styleUrl: './authors.component.css'
 })
@@ -51,16 +50,26 @@ export class AuthorsComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this._AuthorService.deleteAuthor(id).subscribe({
-          next: () => {
-            Swal.fire({
-              icon: "success",
-              title: "Success",
-              text: `Author ${name} deleted!!`,
-              showConfirmButton: false,
-              timer: 1500
-            }).then(() => {
-              window.location.reload()
-            })
+          next: (data) => {
+            if (!data) {
+              Swal.fire({
+                icon: "error",
+                title: "Error Deleting Author",
+                text: `Make sure the author is not associated with any book`,
+                showConfirmButton: false,
+                timer: 2000
+              });
+            } else {
+              Swal.fire({
+                icon: "success",
+                title: "Success",
+                text: `Author ${name} deleted!!`,
+                showConfirmButton: false,
+                timer: 1500
+              }).then(() => {
+                window.location.reload()
+              })
+            }
           },
           error: (e: HttpErrorResponse) => {
             Swal.fire({

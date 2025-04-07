@@ -7,14 +7,13 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { Book } from '../../interfaces/book';
 import { BookService } from '../../services/book.service';
 import Swal from 'sweetalert2';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Author } from '../../interfaces/author';
 import { AuthorService } from '../../services/author.service';
-import { forkJoin, Observable, switchMap } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-form-book',
-  imports: [CommonModule, FormsModule, RouterLink, NavbarComponent, FooterComponent, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, NavbarComponent, FooterComponent, ReactiveFormsModule],
   templateUrl: './form-book.component.html',
   styleUrl: './form-book.component.css'
 })
@@ -27,102 +26,153 @@ export class FormBookComponent {
     genre: new FormControl('', [Validators.required]),
     publicationYear: new FormControl('', [Validators.required]),
     authors: new FormControl('', [Validators.required])
-  })
+  });
 
-  id = ''
-  action = ''
-  object: Book = {} as Book
+  id = '';
+  action = '';
 
-  constructor(private router: Router, private _BookService: BookService, private aRouter: ActivatedRoute, private authorService: AuthorService) {
-    this.id = this.aRouter.snapshot.paramMap.get('isbn')!
+  constructor(
+    private router: Router, 
+    private _BookService: BookService, 
+    private aRouter: ActivatedRoute, 
+    private authorService: AuthorService
+  ) {
+    this.id = this.aRouter.snapshot.paramMap.get('isbn')!;
   }
-
 
   ngOnInit() {
     if (this.router.url === `/admin/books/formBook/edit/${this.id}`) {
-      this.action = 'edit'
-      this.getBook()
-    }
-    else {
-      this.action = 'add'
-    }
-  }
-
-  getBook(){
-    this._BookService.getBookById(this.id).subscribe((data) => {
-      this.BookForm.setValue({
-        isbn: data.isbn,
-        title: data.title!,
-        editorial: data.editorial!,
-        genre: data.genre!,
-        publicationYear: String (data.publicationYear!),
-        authors: data.authors.map(a=>a.id).join(',')
-      })
-    })
-  }
-
-  parseAuthors(authors: string): Observable<Author[]> {
-    const arr = authors.split(',').map(x => x.trim());
-    
-    // Use forkJoin to wait for all author requests to complete
-    return forkJoin(
-      arr.map(authorId => this.authorService.getAuthorById(authorId))
-    );
-  }
-  
-  saveBook() {
-    if (this.BookForm.valid) {
-      // Use the parseAuthors method which now returns an Observable
-      this.parseAuthors(this.BookForm.value.authors!).pipe(
-        // Use switchMap to create the book after authors are fetched
-        switchMap(authors => {
-          const Book: Book = {
-            isbn: this.BookForm.value.isbn!,
-            title: this.BookForm.value.title!,
-            editorial: this.BookForm.value.editorial!,
-            genre: this.BookForm.value.genre!,
-            publicationYear: Number(this.BookForm.value.publicationYear!),
-            authors: authors // Now this is the actual array of authors
-          };
-  
-          return this.action === 'add' 
-            ? this._BookService.createBook(Book)
-            : this._BookService.updateBook(this.id, Book);
-        })
-      ).subscribe({
-        next: () => {
-          Swal.fire({
-            icon: "success",
-            title: this.action === 'add' ? "Book created successfully" : "Book updated successfully",
-            text: `Book ${this.BookForm.value.title} was ${this.action === 'add' ? 'created' : 'updated'}!!`,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          this.goBack();
-        },
-        error: (e: HttpErrorResponse) => {
-          Swal.fire({
-            icon: "error",
-            title: `Error ${this.action === 'add' ? 'creating' : 'updating'} Book`,
-            text: `Check the form fields and try later`,
-            showConfirmButton: false,
-            timer: 2000
-          });
-        }
-      });
+      this.action = 'edit';
+      this.getBook();
     } else {
+      this.action = 'add';
+    }
+  }
+
+  getBook() {
+    this._BookService.getBookById(this.id).subscribe({
+      next: (data) => {
+        this.BookForm.setValue({
+          isbn: data.isbn,
+          title: data.title,
+          editorial: data.editorial,
+          genre: data.genre,
+          publicationYear: String(data.publicationYear),
+          authors: data.authors.map(a => a.id).join(',')
+        });
+      },
+      error: (error) => {
+        console.error('Error fetching book:', error);
+        Swal.fire({
+          icon: "error",
+          title: "Error Loading Book",
+          text: "Could not load the book details.",
+          showConfirmButton: true
+        });
+      }
+    });
+  }
+
+  async saveBook() {
+    
+    if (!this.BookForm.valid) {
+      console.log('Form is invalid:', this.BookForm.errors);
       Swal.fire({
         icon: "error",
         title: "Form is not valid",
-        text: `Check the form fields and try later`,
-        showConfirmButton: false,
-        timer: 2000
+        text: "Please check the form fields and try again.",
+        showConfirmButton: true
+      });
+      return;
+    }
+    
+    const formValues = this.BookForm.value;
+    
+    // Extract author IDs from the comma-separated string
+    const authorIds = formValues.authors!.split(',').map(id => id.trim()).filter(id => id !== '');
+    
+    if (authorIds.length === 0) {
+      console.log('No author IDs provided');
+      Swal.fire({
+        icon: "error",
+        title: "No Authors",
+        text: "Please specify at least one author.",
+        showConfirmButton: true
+      });
+      return;
+    }
+    
+    try {
+      // Fetch authors sequentially and collect them in an array
+      const authors: Author[] = [];
+      
+      for (const authorId of authorIds) {
+        try {
+          // Convert observable to promise using firstValueFrom
+          const author = await firstValueFrom(this.authorService.getAuthorById(authorId));
+          delete author.__typename;
+          authors.push(author);
+        } catch (error) {
+          console.error(`Error fetching author ${authorId}:`, error);
+          throw new Error(`Could not fetch author with ID: ${authorId}`);
+        }
+      }
+      
+      
+      // Create the book object with the fetched authors
+      const book: Book = {
+        isbn: formValues.isbn!,
+        title: formValues.title!,
+        editorial: formValues.editorial!,
+        genre: formValues.genre!,
+        publicationYear: Number(formValues.publicationYear!),
+        authors: authors
+      };
+      
+      
+      // Perform create or update based on action
+      if (this.action === 'add') {
+        // Convert observable to promise
+        const result = await firstValueFrom(this._BookService.createBook(book));
+        this.showSuccessAndNavigate('created');
+      } else {
+        // Convert observable to promise
+        const result = await firstValueFrom(this._BookService.updateBook(this.id, book));
+        this.showSuccessAndNavigate('updated');
+      }
+    } catch (error) {
+      console.error('Error in saveBook process:', error);
+      Swal.fire({
+        icon: "error",
+        title: this.action === 'add' ? "Error Creating Book" : "Error Updating Book",
+        text: error instanceof Error ? error.message : "An unexpected error occurred. Please try again.",
+        showConfirmButton: true
       });
     }
   }
-
-  goBack(){
-    this.router.navigate(['admin/books'])
+  
+  showSuccessAndNavigate(action: string) {
+    Swal.fire({
+      icon: "success",
+      title: `Book ${action} successfully`,
+      text: `Book "${this.BookForm.value.title}" was ${action}!`,
+      showConfirmButton: false,
+      timer: 1500
+    }).then(() => {
+      this.goBack();
+    });
+  }
+  
+  showError(action: string) {
+    Swal.fire({
+      icon: "error",
+      title: `Error ${action} Book`,
+      text: "An error occurred. Please try again later.",
+      showConfirmButton: true
+    });
   }
 
+  goBack() {
+    this.router.navigate(['admin/books']);
+  }
 }
